@@ -10,7 +10,7 @@ export default function PokemonCard(props: PokemonCardProps) {
   const { pokemon } = props;
   const { pokemonRepository } = useContext(HomeContext);
 
-  const { isLoading, error, data } = useFetchPokemonInfo(
+  const { isLoading, error, data: pokemonInfo } = useFetchPokemonInfo(
     pokemon,
     pokemonRepository
   );
@@ -26,7 +26,7 @@ export default function PokemonCard(props: PokemonCardProps) {
     >
       <div className="text-lg font-medium capitalize mb-2">{pokemon.name}</div>
       <div className="flex items-center justify-center">
-        {data?.types.map((type, index, items) => (
+        {pokemonInfo?.types.map((type, index, items) => (
           <Fragment key={index}>
             <img
               className="w-10"
@@ -39,9 +39,13 @@ export default function PokemonCard(props: PokemonCardProps) {
       </div>
       <img
         className="w-36"
-        src={data?.sprites.other?.home.front_default}
+        src={pokemonInfo?.sprites.other?.home.front_default}
         alt={pokemon.name}
       ></img>
+      <div className="flex flex-wrap">
+        <div>Weight: {pokemonInfo?.weight}</div>
+        <div>Heigth: {pokemonInfo?.height}</div>
+      </div>
     </div>
   );
 }
